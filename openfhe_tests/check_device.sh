@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CSV_FILE="system_metrics.csv"
+CSV_FILE="../system_metrics.csv"
 
 # Function to get CPU usage
 get_cpu_usage() {
@@ -58,6 +58,7 @@ append_metrics_to_csv() {
     
     # Append the metrics to the CSV file
     echo "$timestamp,$cpu_usage,$ram_usage,$cpu_temperature,$power_draw" >> "$CSV_FILE"
+    # echo "$timestamp,$ram_usage" >> "$CSV_FILE"
 }
 
 
