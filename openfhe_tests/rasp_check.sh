@@ -65,7 +65,7 @@ append_metrics_to_csv() {
 while true; do
 
     # Run powertop to generate output and extract metrics
-    sudo powertop --time=1 --csv=powertop_output.csv &> /dev/null
+    sudo powertop --time=0.001 --csv=powertop_output.csv &> /dev/null
 
     # Check if powertop command was successful
     if [ $? -eq 0 ]; then
@@ -78,7 +78,7 @@ while true; do
     fi
 
     # Adjust sleep duration as needed
-    sleep 1
+    sleep 0.001
 
 done
 
