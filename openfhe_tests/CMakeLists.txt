@@ -12,6 +12,10 @@ project(demo)
 set(CMAKE_CXX_STANDARD 17)
 option( BUILD_STATIC "Set to ON to include static versions of the library" OFF)
 
+# Set the C and C++ compilers to Clang 11.1.0
+# set(CMAKE_C_COMPILER "/usr/bin/clang-11")
+# set(CMAKE_CXX_COMPILER "/usr/bin/clang++-11")
+
 find_package(OpenFHE CONFIG REQUIRED)
 if (OpenFHE_FOUND)
     message(STATUS "FOUND PACKAGE OpenFHE")
@@ -28,7 +32,7 @@ set( CMAKE_CXX_FLAGS ${OpenFHE_CXX_FLAGS} )
 
 include_directories( ${OPENMP_INCLUDES} )
 include_directories( ${OpenFHE_INCLUDE} )
-# include_directories( ${OpenFHE_INCLUDE}/third-party/include )
+include_directories( ${OpenFHE_INCLUDE}/third-party/include )
 include_directories( ${OpenFHE_INCLUDE}/core )
 include_directories( ${OpenFHE_INCLUDE}/pke )
 include_directories( ${OpenFHE_INCLUDE}/binfhe )
