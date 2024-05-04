@@ -71,23 +71,23 @@ int main() {
     // Seed for the random number generator
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_int_distribution<int64_t> dis(std::numeric_limits<int64_t>::min(), std::numeric_limits<int64_t>::max());
+    std::uniform_int_distribution<int64_t> dis(0, 999);
 
     // Create vectorOfInts1 and populate it with 300 random int64_t values
-    std::vector<int64_t> vectorOfInts1(300);
-    for (int i = 0; i < 300; ++i) {
+    std::vector<int64_t> vectorOfInts1(1000);
+    for (int i = 0; i < 1000; ++i) {
         vectorOfInts1[i] = dis(gen);
     }
 
     // Create vectorOfInts2 and populate it with 300 random int64_t values
-    std::vector<int64_t> vectorOfInts2(300);
-    for (int i = 0; i < 300; ++i) {
+    std::vector<int64_t> vectorOfInts2(1000);
+    for (int i = 0; i < 1000; ++i) {
         vectorOfInts2[i] = dis(gen);
     }
 
     // Create vectorOfInts3 and populate it with 300 random int64_t values
-    std::vector<int64_t> vectorOfInts3(300);
-    for (int i = 0; i < 300; ++i) {
+    std::vector<int64_t> vectorOfInts3(1000);
+    for (int i = 0; i < 1000; ++i) {
         vectorOfInts3[i] = dis(gen);
     }
     // First plaintext vector is encoded

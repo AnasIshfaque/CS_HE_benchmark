@@ -5,7 +5,7 @@ CSV_FILE="../system_metrics.csv"
 # Function to get CPU usage
 get_cpu_usage() {
     # Extract CPU usage from powertop_output.csv
-    cpu_usage=$(awk -F';' '/Device Power Report/ {getline; getline; getline; print $1 }' powertop_output.csv)
+    cpu_usage=$(awk -F';' '/Device Power Report/ {getline; getline; getline; print $1 }' ../powertop_output.csv)
     echo "$cpu_usage"
 }
 
@@ -37,13 +37,13 @@ get_cpu_temperature() {
 
 get_power_draw() {
     # Extract power draw from powertop_output.csv
-    power_draw=$(awk -F';' '/Device Power Report/ {getline; getline; getline; print $3 }' powertop_output.csv)
+    power_draw=$(awk -F';' '/Device Power Report/ {getline; getline; getline; print $3 }' ../powertop_output.csv)
     echo "$power_draw"
 }
 
 # Function to remove temporary powertop_output.csv
 remove_temp_file() {
-    rm -f powertop_output.csv
+    rm -f ../powertop_output.csv
 }
 
 # Append system metrics to CSV file
@@ -65,7 +65,7 @@ append_metrics_to_csv() {
 while true; do
 
     # Run powertop to generate output and extract metrics
-    sudo powertop --time=0.001 --csv=powertop_output.csv &> /dev/null
+    sudo powertop --time=0.001 --csv=../powertop_output.csv &> /dev/null
 
     # Check if powertop command was successful
     if [ $? -eq 0 ]; then
