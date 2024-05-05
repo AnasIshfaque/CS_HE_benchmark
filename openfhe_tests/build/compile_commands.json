@@ -1,7 +1,0 @@
-[
-{
-  "directory": "/home/anas/computer security/CS_HE_benchmark/openfhe_tests/build",
-  "command": "/usr/bin/clang++-11 -I/usr/local/include/openfhe -I/usr/local/include/openfhe/third-party/include -I/usr/local/include/openfhe/core -I/usr/local/include/openfhe/pke -I/usr/local/include/openfhe/binfhe  -Wall -Werror -O3  -DOPENFHE_VERSION=1.1.4  -Wno-unused-private-field -Wno-shift-op-parentheses -DMATHBACKEND=4 -fopenmp=libiomp5 -g -std=gnu++17 -o CMakeFiles/demo.dir/main.cpp.o -c \"/home/anas/computer security/CS_HE_benchmark/openfhe_tests/main.cpp\"",
-  "file": "/home/anas/computer security/CS_HE_benchmark/openfhe_tests/main.cpp"
-}
-]
