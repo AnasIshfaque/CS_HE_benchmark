@@ -15,7 +15,7 @@ using namespace lbcrypto;
 
 void terminateProcess(const char* processName) {
     char command[100];
-    std::strcpy(command, "pkill ");
+    std::strcpy(command, "pkill -f ");
     std::strcat(command, processName);
     std::system(command);
 }
@@ -28,7 +28,7 @@ int main() {
 
     bash_thread.detach();
 
-    // std::this_thread::sleep_for(std::chrono::seconds(10));
+    std::this_thread::sleep_for(std::chrono::seconds(10));
 
     // Get the current time
     auto now = std::chrono::system_clock::now();

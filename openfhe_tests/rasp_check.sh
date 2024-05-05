@@ -48,7 +48,7 @@ remove_temp_file() {
 
 # Append system metrics to CSV file
 append_metrics_to_csv() {
-    timestamp=$(date "+%Y-%m-%d %H:%M:%S")
+    timestamp=$(date "+%Y-%m-%d %H:%M:%S.%N" | cut -c1-23)
     cpu_usage=$(get_cpu_usage)
 	# top_cpu=$(get_top_cpu_usage)
     ram_usage=$(get_ram_usage)
