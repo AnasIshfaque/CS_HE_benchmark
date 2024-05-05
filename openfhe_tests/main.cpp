@@ -28,19 +28,19 @@ int main() {
 
     bash_thread.detach();
 
-    std::this_thread::sleep_for(std::chrono::seconds(10));
+    // std::this_thread::sleep_for(std::chrono::seconds(10));
 
     // Get the current time
-    auto now = std::chrono::system_clock::now();
-    auto millis = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()).count();
-    std::time_t current_time = std::chrono::system_clock::to_time_t(now);
+    auto start_time = std::chrono::system_clock::now();
+    auto start_millis = std::chrono::duration_cast<std::chrono::milliseconds>(start_time.time_since_epoch()).count();
+    std::time_t current_time = std::chrono::system_clock::to_time_t(start_time);
 
     // Format the current time as a string
-    char time_str[100];
-    std::strftime(time_str, sizeof(time_str), "%Y-%m-%d %H:%M:%S", std::localtime(&current_time));
+    char start_time_str[100];
+    std::strftime(start_time_str, sizeof(start_time_str), "%Y-%m-%d %H:%M:%S", std::localtime(&current_time));
 
     // Print the current time including milliseconds
-    std::cout << "Start time with milliseconds: " << time_str << "." << millis % 1000 << std::endl;
+    std::cout << "Start time with milliseconds: " << start_time_str << "." << start_millis % 1000 << std::endl;
 
     // Set CryptoContext
     CCParams<CryptoContextBFVRNS> parameters;
@@ -159,9 +159,10 @@ int main() {
     std::cout << "Right rotation of #1 by 1: " << plaintextRot3 << std::endl;
     std::cout << "Right rotation of #1 by 2: " << plaintextRot4 << std::endl;
 
-    // Get the current time
+    // Get the end time
     auto end_time = std::chrono::system_clock::now();
-    auto end_time_millis = std::chrono::duration_cast<std::chrono::milliseconds>(end_time.time_since_epoch()).count();
+    auto end_millis = std::chrono::duration_cast<std::chrono::milliseconds>(end_time.time_since_epoch()).count();
+
     std::time_t full_end_time = std::chrono::system_clock::to_time_t(end_time);
 
     // Format the current time as a string
@@ -169,7 +170,16 @@ int main() {
     std::strftime(end_time_str, sizeof(end_time_str), "%Y-%m-%d %H:%M:%S", std::localtime(&full_end_time));
 
     // Print the current time including milliseconds
-    std::cout << "End time with milliseconds: " << end_time_str << "." << end_time_millis % 1000 << std::endl;
+    std::cout << "End time with milliseconds: " << end_time_str << "." << end_millis % 1000 << std::endl;
+
+    // Calculate the difference in milliseconds
+    auto duration = end_time - start_time;
+    auto duration_millis = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+
+    std::cout << "Duration: " << duration_millis << " milliseconds" << std::endl;
+
+    // Print the size of cryptoContext
+    std::cout << "Size of cryptoContext: " << sizeof(*cryptoContext) << " bytes" << std::endl;
 
     // std::this_thread::sleep_for(std::chrono::seconds(10));
 
