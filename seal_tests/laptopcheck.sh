@@ -77,7 +77,7 @@ while true; do
     # Append metrics to CSV file
     append_metrics_to_csv
     # Adjust sleep duration as needed
-    sleep 0.0001
+    sleep 0.01
 
 done
 

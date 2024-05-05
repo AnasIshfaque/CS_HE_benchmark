@@ -44,8 +44,8 @@ cmake_ninja_workdir = /home/Anas2189/CS_HE_benchmark/seal_tests/build/
 
 build cmake_object_order_depends_target_seal_demo: phony || CMakeFiles/seal_demo.dir
 
-build CMakeFiles/seal_demo.dir/main_bfv.cpp.o: CXX_COMPILER__seal_demo_unscanned_ /home/Anas2189/CS_HE_benchmark/seal_tests/main_bfv.cpp || cmake_object_order_depends_target_seal_demo
-  DEP_FILE = CMakeFiles/seal_demo.dir/main_bfv.cpp.o.d
+build CMakeFiles/seal_demo.dir/main_bgv.cpp.o: CXX_COMPILER__seal_demo_unscanned_ /home/Anas2189/CS_HE_benchmark/seal_tests/main_bgv.cpp || cmake_object_order_depends_target_seal_demo
+  DEP_FILE = CMakeFiles/seal_demo.dir/main_bgv.cpp.o.d
   FLAGS = -std=gnu++17 -pthread
   INCLUDES = -isystem /usr/local/include/SEAL-4.1
   OBJECT_DIR = CMakeFiles/seal_demo.dir
@@ -61,7 +61,7 @@ build CMakeFiles/seal_demo.dir/main_bfv.cpp.o: CXX_COMPILER__seal_demo_unscanned
 #############################################
 # Link the executable seal_demo
 
-build seal_demo: CXX_EXECUTABLE_LINKER__seal_demo_ CMakeFiles/seal_demo.dir/main_bfv.cpp.o | /usr/local/lib/aarch64-linux-gnu/libseal-4.1.a
+build seal_demo: CXX_EXECUTABLE_LINKER__seal_demo_ CMakeFiles/seal_demo.dir/main_bgv.cpp.o | /usr/local/lib/aarch64-linux-gnu/libseal-4.1.a
   LINK_LIBRARIES = /usr/local/lib/aarch64-linux-gnu/libseal-4.1.a  -pthread
   OBJECT_DIR = CMakeFiles/seal_demo.dir
   POST_BUILD = :

@@ -4,29 +4,29 @@ ____________________________________________________________________
 ____________________________________________________________________
  *  *  *   System Information   *  *  *
 
-PowerTOP Version;v2.11-1-g7ef7f79 ran at Sun May  5 18:14:56 2024
+PowerTOP Version;v2.11-1-g7ef7f79 ran at Sun May  5 18:41:49 2024
 
 Kernel Version;Linux version 6.1.21-v8+
 System Name;
 CPU Information;4
 OS Information;Debian GNU/Linux 11 (bullseye)
 
-Target: 1 units/s;System:  833.2 wakeup/s;CPU:  110.1% usage;GPU: 0 ops/s;GFX: 0 wakeups/s;VFS: 0 ops/s;
+Target: 1 units/s;System:  924.0 wakeup/s;CPU:  98.0% usage;GPU: 0 ops/s;GFX: 0 wakeups/s;VFS: 0 ops/s;
 
 ____________________________________________________________________
  *  *  *   Top 10 Power Consumers   *  *  *
 
 Usage;Events/s;Category;Description;PW Estimate
-  0.2%;368.9;Interrupt;[14] fe00b880.mailbox;  1.46 W  
- 65.8%; 0.00;Process;[PID 911] ./seal_demo ;  1.03 W  
-  0.7%;178.1;Interrupt;[2] IPI;  714 mW  
- 34.0%; 0.00;Process;[PID 916] powertop --time=0.0001 --csv=powertop_output.csv ;  531 mW  
-  0.0%; 95.4;kWork;handle_update;  377 mW  
-  0.2%; 89.1;Timer;txdone_hrtimer;  354 mW  
-  0.8%; 44.5;Process;[PID 15] [rcu_preempt];  188 mW  
-  0.7%; 44.5;Timer;tick_sched_timer;  186 mW  
-  0.2%; 12.7;Interrupt;[7] sched(softirq); 54.1 mW  
-  2.3%; 0.00;Interrupt;[11] arch_timer; 35.1 mW  
+  0.2%;266.7;Interrupt;[14] fe00b880.mailbox;  1.06 W  
+ 67.0%; 0.00;Process;[PID 917] ./seal_demo ;  1.05 W  
+  0.7%;198.5;Interrupt;[2] IPI;  794 mW  
+  0.9%;155.0;Timer;tick_sched_timer;  626 mW  
+  0.8%;117.8;Process;[PID 15] [rcu_preempt];  478 mW  
+ 22.6%; 0.00;Process;[PID 922] powertop --time=0.0001 --csv=powertop_output.csv ;  352 mW  
+  0.1%; 86.8;Timer;txdone_hrtimer;  345 mW  
+  0.0%; 86.8;kWork;handle_update;  343 mW  
+  2.1%; 0.00;Process;[PID 925] [kworker/1:0]; 32.2 mW  
+  0.0%;  6.2;Process;[PID 14] [ksoftirqd/0]; 24.7 mW  
 
 ____________________________________________________________________
  *  *  *   Processor Idle State Report   *  *  *
@@ -57,7 +57,7 @@ ____________________________________________________________________
  *  *  *   Processor Frequency Report   *  *  *
 
 Package;0
- 600 MHz;  59.4% 
+ 600 MHz;  59.7% 
  700 MHz;   0.0% 
  800 MHz;   0.0% 
  900 MHz;   0.0% 
@@ -70,15 +70,15 @@ Package;0
 1.60 GHz;   0.0% 
 1.71 GHz;   0.0% 
 1.80 GHz;   0.0% 
-1.91 GHz;  34.1% 
-Idle;   6.5% 
+1.91 GHz;  33.3% 
+Idle;   7.0% 
 ;
 ;
 ;
 ;
 
 CPU 0
- 600 MHz;   0.1% 
+ 600 MHz;   1.2% 
  700 MHz;   0.0% 
  800 MHz;   0.0% 
  900 MHz;   0.0% 
@@ -92,9 +92,9 @@ CPU 0
 1.71 GHz;   0.0% 
 1.80 GHz;   0.0% 
 1.91 GHz;   0.1% 
-Idle;  99.8% 
+Idle;  98.6% 
 CPU 1
- 600 MHz;  59.4% 
+ 600 MHz;  19.0% 
  700 MHz;   0.0% 
  800 MHz;   0.0% 
  900 MHz;   0.0% 
@@ -107,25 +107,9 @@ CPU 1
 1.60 GHz;   0.0% 
 1.71 GHz;   0.0% 
 1.80 GHz;   0.0% 
-1.91 GHz;  34.1% 
-Idle;   6.5% 
+1.91 GHz;   1.9% 
+Idle;  79.2% 
 CPU 2
- 600 MHz;  19.6% 
- 700 MHz;   0.0% 
- 800 MHz;   0.0% 
- 900 MHz;   0.0% 
-1000 MHz;   0.0% 
-1100 MHz;   0.0% 
-1200 MHz;   0.0% 
-1300 MHz;   0.0% 
-1400 MHz;   0.0% 
-1500 MHz;   0.0% 
-1.60 GHz;   0.0% 
-1.71 GHz;   0.0% 
-1.80 GHz;   0.0% 
-1.91 GHz;   2.1% 
-Idle;  78.3% 
-CPU 3
  600 MHz;   0.0% 
  700 MHz;   0.0% 
  800 MHz;   0.0% 
@@ -141,6 +125,22 @@ CPU 3
 1.80 GHz;   0.0% 
 1.91 GHz;   0.0% 
 Idle; 100.0% 
+CPU 3
+ 600 MHz;  59.7% 
+ 700 MHz;   0.0% 
+ 800 MHz;   0.0% 
+ 900 MHz;   0.0% 
+1000 MHz;   0.0% 
+1100 MHz;   0.0% 
+1200 MHz;   0.0% 
+1300 MHz;   0.0% 
+1400 MHz;   0.0% 
+1500 MHz;   0.0% 
+1.60 GHz;   0.0% 
+1.71 GHz;   0.0% 
+1.80 GHz;   0.0% 
+1.91 GHz;  33.3% 
+Idle;   7.0% 
 ;
 ;
 ;
@@ -154,27 +154,27 @@ ____________________________________________________________________
  *  *  *   Overview of Software Power Consumers   *  *  *
 
 Usage;Wakeups/s;GPU ops/s;Disk IO/s;GFX Wakeups/s;Category;Description;PW Estimate
-  1.6 ms/s;368.9;;;;Interrupt;[14] fe00b880.mailbox;  1.46 W  
-657.8 ms/s;;;;;Process;[PID 911] ./seal_demo ;  1.03 W  
-  6.9 ms/s;178.1;;;;Interrupt;[2] IPI;  714 mW  
-340.2 ms/s;;;;;Process;[PID 916] powertop --time=0.0001 --csv=powertop_output.csv ;  531 mW  
-  0.0 us/s; 95.4;;;;kWork;handle_update;  377 mW  
-  1.6 ms/s; 89.1;;;;Timer;txdone_hrtimer;  354 mW  
-  7.6 ms/s; 44.5;;;;Process;[PID 15] [rcu_preempt];  188 mW  
-  6.6 ms/s; 44.5;;;;Timer;tick_sched_timer;  186 mW  
-  2.5 ms/s; 12.7;;;;Interrupt;[7] sched(softirq); 54.1 mW  
- 22.5 ms/s;;;;;Interrupt;[11] arch_timer; 35.1 mW  
- 20.7 ms/s;;;;;Process;[PID 26] [kworker/2:0]; 32.3 mW  
- 11.8 ms/s;;;;;Process;[PID 63] [kworker/1:4]; 18.4 mW  
- 10.5 ms/s;;;;;Process;[PID 308] [kworker/2:3]; 16.4 mW  
-  5.3 ms/s;;;;;Interrupt;[9] RCU(softirq); 8.25 mW  
-  1.9 ms/s;;;;;Timer;process_timeout; 2.93 mW  
-  1.6 ms/s;;;;;Interrupt;[1] timer(softirq); 2.53 mW  
-  1.6 ms/s;;;;;Interrupt;[6] IPI; 2.42 mW  
-415.7 us/s;;;;;Process;[PID 25] [ksoftirqd/2];  648 uW  
- 87.2 us/s;;;;;Timer;tcp_orphan_update;  136 uW  
-;;;;;;;
-;;;;;;;
+  1.7 ms/s;266.7;;;;Interrupt;[14] fe00b880.mailbox;  1.06 W  
+670.3 ms/s;;;;;Process;[PID 917] ./seal_demo ;  1.05 W  
+  6.6 ms/s;198.5;;;;Interrupt;[2] IPI;  794 mW  
+  8.7 ms/s;155.0;;;;Timer;tick_sched_timer;  626 mW  
+  8.1 ms/s;117.8;;;;Process;[PID 15] [rcu_preempt];  478 mW  
+225.8 ms/s;;;;;Process;[PID 922] powertop --time=0.0001 --csv=powertop_output.csv ;  352 mW  
+  1.5 ms/s; 86.8;;;;Timer;txdone_hrtimer;  345 mW  
+  0.0 us/s; 86.8;;;;kWork;handle_update;  343 mW  
+ 20.6 ms/s;;;;;Process;[PID 925] [kworker/1:0]; 32.2 mW  
+154.0 us/s;  6.2;;;;Process;[PID 14] [ksoftirqd/0]; 24.7 mW  
+116.6 us/s;  6.2;;;;kWork;dbs_work_handler; 24.7 mW  
+ 10.4 ms/s;;;;;Process;[PID 275] [kworker/3:3]; 16.3 mW  
+  9.4 ms/s;;;;;Process;[PID 62] [kworker/1:5]; 14.7 mW  
+  8.5 ms/s;;;;;Interrupt;[9] RCU(softirq); 13.2 mW  
+  4.1 ms/s;;;;;Interrupt;[7] sched(softirq); 6.43 mW  
+  2.0 ms/s;;;;;Timer;process_timeout; 3.14 mW  
+  1.6 ms/s;;;;;Interrupt;[6] IPI; 2.50 mW  
+  0.8 ms/s;;;;;Interrupt;[1] timer(softirq); 1.26 mW  
+196.6 us/s;;;;;Process;[PID 20] [ksoftirqd/1];  307 uW  
+165.2 us/s;;;;;Interrupt;[11] arch_timer;  258 uW  
+ 92.5 us/s;;;;;Timer;tcp_orphan_update;  144 uW  
 ;;;;;;;
 ;;;;;;;
 ;;;;;;;
@@ -256,12 +256,12 @@ Usage;Wakeups/s;GPU ops/s;Disk IO/s;GFX Wakeups/s;Category;Description;PW Estima
 ;;;;;;;
 
 
-The system baseline power is estimated at:  5.01  W;
+The system baseline power is estimated at:  5.18  W;
 ____________________________________________________________________
  *  *  *   Device Power Report   *  *  *
 
 Usage;Device Name;PW Estimate
-110.1%;CPU use;  5.01 W   
+ 98.1%;CPU use;  5.18 W   
 100.0%;runtime-fef00700.hdmi;           
 100.0%;Radio device: brcmfmac;           
 100.0%;radio:hci0;           
@@ -363,6 +363,8 @@ thd;/dev/input/event0
 rngd;/dev/hwrng
 ;/dev/random
 vncserver-x11-c;/dev/console
+wpa_supplicant;/dev/rfkill
+;/dev/rfkill
 Xorg;/dev/dri/card1
 ;/dev/dri/card1
 ;/dev/dri/card1
@@ -372,8 +374,6 @@ Xorg;/dev/dri/card1
 ;/dev/input/event0
 ;/dev/input/event1
 ;/dev/vga_arbiter
-wpa_supplicant;/dev/rfkill
-;/dev/rfkill
 pulseaudio;/dev/snd/controlC0
 pi-greeter;/dev/dri/card1
 ;/dev/dri/card1
