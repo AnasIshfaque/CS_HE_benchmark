@@ -10,5 +10,5 @@ find_package(SEAL 4.1 REQUIRED)
 # include_directories(${SEAL_INCLUDE_DIRS})
 
 
-add_executable(${PROJECT_NAME} main_bfv.cpp)
+add_executable(${PROJECT_NAME} main_bgv.cpp)
 target_link_libraries(${PROJECT_NAME} SEAL::seal)
