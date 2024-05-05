@@ -57,7 +57,7 @@ int main() {
     cryptoContext->Enable(PKE);
     cryptoContext->Enable(KEYSWITCH);
     cryptoContext->Enable(LEVELEDSHE);
-    std::cout << "CKKS scheme is using ring dimension " << cc->GetRingDimension() << std::endl << std::endl;
+    std::cout << "CKKS scheme is using ring dimension " << cryptoContext->GetRingDimension() << std::endl << std::endl;
 
     auto key_gen_start_time = std::chrono::system_clock::now();
 
