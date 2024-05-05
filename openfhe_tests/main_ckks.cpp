@@ -108,23 +108,23 @@ int main() {
 
     std::vector<double> x1 = {0.25, 0.5, 0.75, 1.0, 2.0, 3.0, 4.0, 5.0};
     std::vector<double> x2 = {5.0, 4.0, 3.0, 2.0, 1.0, 0.75, 0.5, 0.25};
-    std::vector<double> x3 = {0.45, 0.65, 0.8, 1.3, 4.4, 3.9, 5.8, 2.1};
+    // std::vector<double> x3 = {0.45, 0.65, 0.8, 1.3, 4.4, 3.9, 5.8, 2.1};
 
     auto encryption_start_time = std::chrono::system_clock::now();
 
     // Encoding as plaintexts
     Plaintext ptxt1 = cryptoContext->MakeCKKSPackedPlaintext(x1);
     Plaintext ptxt2 = cryptoContext->MakeCKKSPackedPlaintext(x2);
-    Plaintext ptxt3 = cryptoContext->MakeCKKSPackedPlaintext(x3);
+    // Plaintext ptxt3 = cryptoContext->MakeCKKSPackedPlaintext(x3);
 
     std::cout << "Input x1: " << ptxt1 << std::endl;
     std::cout << "Input x2: " << ptxt2 << std::endl;
-    std::cout << "Input x3: " << ptxt3 << std::endl;
+    // std::cout << "Input x3: " << ptxt3 << std::endl;
 
     // The encoded vectors are encrypted
     auto ciphertext1 = cryptoContext->Encrypt(keyPair.publicKey, ptxt1);
     auto ciphertext2 = cryptoContext->Encrypt(keyPair.publicKey, ptxt2);
-    auto ciphertext3 = cryptoContext->Encrypt(keyPair.publicKey, ptxt3);
+    // auto ciphertext3 = cryptoContext->Encrypt(keyPair.publicKey, ptxt3);
 
     auto encryption_end_time = std::chrono::system_clock::now();
     auto encryption_time = encryption_end_time - encryption_start_time;
@@ -136,7 +136,7 @@ int main() {
     auto add_start_time = std::chrono::system_clock::now();
     // Homomorphic additions
     auto ciphertextAdd12     = cryptoContext->EvalAdd(ciphertext1, ciphertext2);
-    auto ciphertextAddResult = cryptoContext->EvalAdd(ciphertextAdd12, ciphertext3);
+    // auto ciphertextAddResult = cryptoContext->EvalAdd(ciphertextAdd12, ciphertext3);
 
     auto add_end_time = std::chrono::system_clock::now();
     auto add_time = add_end_time - add_start_time;
@@ -147,7 +147,7 @@ int main() {
     auto mult_start_time = std::chrono::system_clock::now();
     // Homomorphic multiplications
     auto ciphertextMul12      = cryptoContext->EvalMult(ciphertext1, ciphertext2);
-    auto ciphertextMultResult = cryptoContext->EvalMult(ciphertextMul12, ciphertext3);
+    // auto ciphertextMultResult = cryptoContext->EvalMult(ciphertextMul12, ciphertext3);
 
     auto mult_end_time = std::chrono::system_clock::now();
     auto mult_time = mult_end_time - mult_start_time;
@@ -173,16 +173,16 @@ int main() {
     Plaintext result;
 
     // Decrypt the result of addition
-    cryptoContext->Decrypt(keyPair.secretKey, ciphertextAddResult, &result);
+    cryptoContext->Decrypt(keyPair.secretKey, ciphertextAdd12, &result);
     result->SetLength(batchSize);
-    std::cout << "x1 + x2 + x3= " << result;
+    std::cout << "x1 + x2 = " << result;
     std::cout << "Estimated precision in bits: " << result->GetLogPrecision() << std::endl;
 
 
     // Decrypt the result of multiplication
-    cryptoContext->Decrypt(keyPair.secretKey, ciphertextMultResult, &result);
+    cryptoContext->Decrypt(keyPair.secretKey, ciphertextMul12, &result);
     result->SetLength(batchSize);
-    std::cout << "x1 * x2 * x3 = " << result << std::endl;
+    std::cout << "x1 * x2 = " << result << std::endl;
 
 
     // Decrypt the result of rotations
