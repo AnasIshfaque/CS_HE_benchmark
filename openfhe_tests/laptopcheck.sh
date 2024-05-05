@@ -53,21 +53,31 @@ append_metrics_to_csv() {
 	# top_cpu=$(get_top_cpu_usage)
     ram_usage=$(get_ram_usage)
 	# vcgencmd_ram_use=$(get_vcgencmd_ram)
-    # cpu_temperature=$(get_cpu_temperature)
+    cpu_temperature=$(get_cpu_temperature)
     # power_draw=$(get_power_draw)
     
     # Append the metrics to the CSV file
-    echo "$timestamp,$ram_usage" >> "$CSV_FILE"
+    echo "$timestamp,$ram_usage,$cpu_temperature" >> "$CSV_FILE"
     # echo "$timestamp,$ram_usage" >> "$CSV_FILE"
 }
 
+# Run powertop to generate output and extract metrics
+sudo powertop --time=0.0001 --csv=powertop_output.csv &> /dev/null
+
+SINGLE_VAL_FILE="../single_val.csv"
+
+cpu_usage=$(get_cpu_usage)
+echo "CPU Usage: $cpu_usage" >> "$SINGLE_VAL_FILE"
+
+power_draw=$(get_power_draw)
+echo "Power Draw: $power_draw" >> "$SINGLE_VAL_FILE"
 
 while true; do
 
     # Append metrics to CSV file
     append_metrics_to_csv
     # Adjust sleep duration as needed
-    sleep 0.00001
+    sleep 0.0001
 
 done
 

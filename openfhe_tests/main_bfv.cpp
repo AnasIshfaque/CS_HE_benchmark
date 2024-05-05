@@ -24,12 +24,12 @@ int main() {
 
     // starting the device tracking
     std::thread bash_thread([](){
-        std::system("../rasp_check.sh");
+        std::system("../laptopcheck.sh");
     });
 
     bash_thread.detach();
 
-    std::this_thread::sleep_for(std::chrono::seconds(3));
+    // std::this_thread::sleep_for(std::chrono::seconds(3));
 
     // Get the current time
     auto start_time = std::chrono::system_clock::now();
@@ -54,6 +54,8 @@ int main() {
     cryptoContext->Enable(KEYSWITCH);
     cryptoContext->Enable(LEVELEDSHE);
 
+    auto key_gen_start_time = std::chrono::system_clock::now();
+
     // Key Generation
     // Initialize Public Key Containers
     KeyPair<DCRTPoly> keyPair;
@@ -66,6 +68,12 @@ int main() {
 
     // Generate the rotation evaluation keys
     cryptoContext->EvalRotateKeyGen(keyPair.secretKey, {1, 2, -1, -2});
+
+    auto key_gen_end_time = std::chrono::system_clock::now();
+    auto key_gen_time = key_gen_end_time - key_gen_start_time;
+    auto key_gen_time_millis = std::chrono::duration_cast<std::chrono::milliseconds>(key_gen_time).count();
+
+    std::cout << "Key generation time: " << key_gen_time_millis << " milliseconds" << std::endl;
 
     // Encryption
     // Creating 3 plaintext vectors with random integers
@@ -91,6 +99,8 @@ int main() {
     for (int i = 0; i < 1000; ++i) {
         vectorOfInts3[i] = dis(gen);
     }
+
+    auto encryption_start_time = std::chrono::system_clock::now();
     // First plaintext vector is encoded
     // std::vector<int64_t> vectorOfInts1 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
     Plaintext plaintext1               = cryptoContext->MakePackedPlaintext(vectorOfInts1);
@@ -106,22 +116,47 @@ int main() {
     auto ciphertext2 = cryptoContext->Encrypt(keyPair.publicKey, plaintext2);
     auto ciphertext3 = cryptoContext->Encrypt(keyPair.publicKey, plaintext3);
 
+    auto encryption_end_time = std::chrono::system_clock::now();
+    auto encryption_time = encryption_end_time - encryption_start_time;
+    auto encryption_time_millis = std::chrono::duration_cast<std::chrono::milliseconds>(encryption_time).count();
+    std::cout << "Encryption time: " << encryption_time_millis << " milliseconds" << std::endl;
+
     // Evaluation
 
+    auto add_start_time = std::chrono::system_clock::now();
     // Homomorphic additions
     auto ciphertextAdd12     = cryptoContext->EvalAdd(ciphertext1, ciphertext2);
     auto ciphertextAddResult = cryptoContext->EvalAdd(ciphertextAdd12, ciphertext3);
 
+    auto add_end_time = std::chrono::system_clock::now();
+    auto add_time = add_end_time - add_start_time;
+    auto add_time_millis = std::chrono::duration_cast<std::chrono::milliseconds>(add_time).count();
+    std::cout << "Addition time: " << add_time_millis << " milliseconds" << std::endl;
+
+
+    auto mult_start_time = std::chrono::system_clock::now();
     // Homomorphic multiplications
     auto ciphertextMul12      = cryptoContext->EvalMult(ciphertext1, ciphertext2);
     auto ciphertextMultResult = cryptoContext->EvalMult(ciphertextMul12, ciphertext3);
 
+    auto mult_end_time = std::chrono::system_clock::now();
+    auto mult_time = mult_end_time - mult_start_time;
+    auto mult_time_millis = std::chrono::duration_cast<std::chrono::milliseconds>(mult_time).count();
+    std::cout << "Multiplication time: " << mult_time_millis << " milliseconds" << std::endl;
+
+    auto rot_start_time = std::chrono::system_clock::now();
     // Homomorphic rotations
     auto ciphertextRot1 = cryptoContext->EvalRotate(ciphertext1, 1);
     auto ciphertextRot2 = cryptoContext->EvalRotate(ciphertext1, 2);
     auto ciphertextRot3 = cryptoContext->EvalRotate(ciphertext1, -1);
     auto ciphertextRot4 = cryptoContext->EvalRotate(ciphertext1, -2);
 
+    auto rot_end_time = std::chrono::system_clock::now();
+    auto rot_time = rot_end_time - rot_start_time;
+    auto rot_time_millis = std::chrono::duration_cast<std::chrono::milliseconds>(rot_time).count();
+    std::cout << "Rotation time: " << rot_time_millis << " milliseconds" << std::endl;
+
+    auto decryption_start_time = std::chrono::system_clock::now();
     // Decryption
 
     // Decrypt the result of additions
@@ -146,6 +181,11 @@ int main() {
     plaintextRot2->SetLength(vectorOfInts1.size());
     plaintextRot3->SetLength(vectorOfInts1.size());
     plaintextRot4->SetLength(vectorOfInts1.size());
+    
+    auto decryption_end_time = std::chrono::system_clock::now();
+    auto decryption_time = decryption_end_time - decryption_start_time;
+    auto decryption_time_millis = std::chrono::duration_cast<std::chrono::milliseconds>(decryption_time).count();
+    std::cout << "Decryption time: " << decryption_time_millis << " milliseconds" << std::endl;
 
     // std::cout << "Plaintext #1: " << plaintext1 << std::endl;
     // std::cout << "Plaintext #2: " << plaintext2 << std::endl;
@@ -185,7 +225,7 @@ int main() {
     std::this_thread::sleep_for(std::chrono::seconds(3));
 
     // Terminate the bash script process
-    terminateProcess("../rasp_check.sh");
+    terminateProcess("../laptopcheck.sh");
 
     return 0;
 }
