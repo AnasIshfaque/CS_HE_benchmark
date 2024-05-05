@@ -21,7 +21,7 @@ void terminateProcess(const char* processName) {
 }
 
 int main() {
-    std::system("ls");
+
     // starting the device tracking
     std::thread bash_thread([](){
         std::system("../rasp_check.sh");

@@ -38,7 +38,7 @@ remove_temp_file() {
     rm -f powertop_output.csv
 }
 
-echo "timestamp,cpu_usage,ram_usage,get_cpu_temperature,power_draw" >> "$CSV_FILE"
+#echo "timestamp,cpu_usage,ram_usage,get_cpu_temperature,power_draw" >> "$CSV_FILE"
 
 # Append system metrics to CSV file
 append_metrics_to_csv() {
@@ -51,16 +51,16 @@ append_metrics_to_csv() {
     power_draw=$(get_power_draw)
     
     # Append the metrics to the CSV file
-    echo "$timestamp,$cpu_usage,$ram_usage,$get_cpu_temperature,$power_draw" >> "$CSV_FILE"
+    echo "$timestamp,$cpu_usage,$ram_usage,$cpu_temperature,$power_draw" >> "$CSV_FILE"
     # echo "$timestamp,$ram_usage" >> "$CSV_FILE"
 }
 
-counter=0
+#counter=0
 
-while [ $counter -lt 100 ]; do
+while true; do
 
     # Run powertop to generate output and extract metrics
-    sudo powertop --time=0.001 --csv=powertop_output.csv &> /dev/null
+    sudo powertop --time=0.0001 --csv=powertop_output.csv &> /dev/null
 
     # Check if powertop command was successful
     if [ $? -eq 0 ]; then
@@ -72,7 +72,7 @@ while [ $counter -lt 100 ]; do
         echo "N/A (powertop failed to run)"
     fi
 
-    ((counter++))
+    #((counter++))
 
     # Adjust sleep duration as needed
     sleep 0.001
