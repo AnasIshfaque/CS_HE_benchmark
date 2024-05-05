@@ -44,8 +44,8 @@ cmake_ninja_workdir = /home/Anas2189/CS_HE_benchmark/openfhe_tests/build/
 
 build cmake_object_order_depends_target_demo: phony || CMakeFiles/demo.dir
 
-build CMakeFiles/demo.dir/main_bfv.cpp.o: CXX_COMPILER__demo_unscanned_ /home/Anas2189/CS_HE_benchmark/openfhe_tests/main_bfv.cpp || cmake_object_order_depends_target_demo
-  DEP_FILE = CMakeFiles/demo.dir/main_bfv.cpp.o.d
+build CMakeFiles/demo.dir/main_bgv.cpp.o: CXX_COMPILER__demo_unscanned_ /home/Anas2189/CS_HE_benchmark/openfhe_tests/main_bgv.cpp || cmake_object_order_depends_target_demo
+  DEP_FILE = CMakeFiles/demo.dir/main_bgv.cpp.o.d
   FLAGS = -Wall -Werror -O3  -DOPENFHE_VERSION=1.1.4  -Wno-unused-private-field -Wno-shift-op-parentheses -DMATHBACKEND=4 -fopenmp=libomp -std=gnu++17
   INCLUDES = -I/usr/local/include/openfhe -I/usr/local/include/openfhe/third-party/include -I/usr/local/include/openfhe/core -I/usr/local/include/openfhe/pke -I/usr/local/include/openfhe/binfhe
   OBJECT_DIR = CMakeFiles/demo.dir
@@ -61,7 +61,7 @@ build CMakeFiles/demo.dir/main_bfv.cpp.o: CXX_COMPILER__demo_unscanned_ /home/An
 #############################################
 # Link the executable demo
 
-build demo: CXX_EXECUTABLE_LINKER__demo_ CMakeFiles/demo.dir/main_bfv.cpp.o | /usr/local/lib/libOPENFHEpke.so.1.1.4 /usr/local/lib/libOPENFHEbinfhe.so.1.1.4 /usr/local/lib/libOPENFHEcore.so.1.1.4
+build demo: CXX_EXECUTABLE_LINKER__demo_ CMakeFiles/demo.dir/main_bgv.cpp.o | /usr/local/lib/libOPENFHEpke.so.1.1.4 /usr/local/lib/libOPENFHEbinfhe.so.1.1.4 /usr/local/lib/libOPENFHEcore.so.1.1.4
   FLAGS = -Wall -Werror -O3  -DOPENFHE_VERSION=1.1.4  -Wno-unused-private-field -Wno-shift-op-parentheses -DMATHBACKEND=4 -fopenmp=libomp
   LINK_LIBRARIES = -Wl,-rpath,/usr/local/lib  /usr/local/lib/libOPENFHEpke.so.1.1.4  /usr/local/lib/libOPENFHEbinfhe.so.1.1.4  -fopenmp=libomp  /usr/local/lib/libOPENFHEcore.so.1.1.4  -fopenmp=libomp
   LINK_PATH = -L/usr/local/lib
