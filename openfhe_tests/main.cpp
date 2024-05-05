@@ -21,9 +21,10 @@ void terminateProcess(const char* processName) {
 }
 
 int main() {
+    std::system("ls");
     // starting the device tracking
     std::thread bash_thread([](){
-        std::system("../rasp_check.sh");
+        std::system("../laptopcheck.sh");
     });
 
     bash_thread.detach();
@@ -184,7 +185,7 @@ int main() {
     // std::this_thread::sleep_for(std::chrono::seconds(10));
 
     // Terminate the bash script process
-    terminateProcess("../rasp_check.sh");
+    terminateProcess("../laptopcheck.sh");
 
     return 0;
 }

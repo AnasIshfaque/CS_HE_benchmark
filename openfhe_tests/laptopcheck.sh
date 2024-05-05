@@ -5,7 +5,7 @@ CSV_FILE="../system_metrics.csv"
 # Function to get CPU usage
 get_cpu_usage() {
     # Extract CPU usage from powertop_output.csv
-    cpu_usage=$(awk -F';' '/Device Power Report/ {getline; getline; getline; print $1 }' ../powertop_output.csv)
+    cpu_usage=$(awk -F';' '/Device Power Report/ {getline; getline; getline; print $1 }' powertop_output.csv)
     echo "$cpu_usage"
 }
 
@@ -37,48 +37,37 @@ get_cpu_temperature() {
 
 get_power_draw() {
     # Extract power draw from powertop_output.csv
-    power_draw=$(awk -F';' '/Device Power Report/ {getline; getline; getline; print $3 }' ../powertop_output.csv)
+    power_draw=$(awk -F';' '/Device Power Report/ {getline; getline; getline; print $3 }' powertop_output.csv)
     echo "$power_draw"
 }
 
 # Function to remove temporary powertop_output.csv
 remove_temp_file() {
-    rm -f ../powertop_output.csv
+    rm -f powertop_output.csv
 }
 
 # Append system metrics to CSV file
 append_metrics_to_csv() {
     timestamp=$(date "+%Y-%m-%d %H:%M:%S.%N" | cut -c1-23)
-    cpu_usage=$(get_cpu_usage)
+    # cpu_usage=$(get_cpu_usage)
 	# top_cpu=$(get_top_cpu_usage)
     ram_usage=$(get_ram_usage)
 	# vcgencmd_ram_use=$(get_vcgencmd_ram)
-    cpu_temperature=$(get_cpu_temperature)
-    power_draw=$(get_power_draw)
+    # cpu_temperature=$(get_cpu_temperature)
+    # power_draw=$(get_power_draw)
     
     # Append the metrics to the CSV file
-    echo "$timestamp,$cpu_usage,$ram_usage,$cpu_temperature,$power_draw" >> "$CSV_FILE"
+    echo "$timestamp,$ram_usage" >> "$CSV_FILE"
     # echo "$timestamp,$ram_usage" >> "$CSV_FILE"
 }
 
 
 while true; do
 
-    # Run powertop to generate output and extract metrics
-    sudo powertop --time=0.001 --csv=./openfhe_tests/powertop_output.csv &> /dev/null
-
-    # Check if powertop command was successful
-    if [ $? -eq 0 ]; then
-        # Append metrics to CSV file
-    	append_metrics_to_csv
-        # Remove temporary powertop_output.csv
-        remove_temp_file
-    else
-        echo "N/A (powertop failed to run)"
-    fi
-
+    # Append metrics to CSV file
+    append_metrics_to_csv
     # Adjust sleep duration as needed
-    sleep 0.001
+    sleep 0.00001
 
 done
 
