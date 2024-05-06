@@ -2,18 +2,25 @@ package main
 
 import (
 	"fmt"
-	"math/cmplx"
+	//"math/cmplx"
 	"math/rand"
 
 	"github.com/tuneinsight/lattigo/v5/core/rlwe"
 	"github.com/tuneinsight/lattigo/v5/he"
 	"github.com/tuneinsight/lattigo/v5/he/hefloat"
 	"github.com/tuneinsight/lattigo/v5/utils"
-	"github.com/tuneinsight/lattigo/v5/utils/bignum"
+	//"github.com/tuneinsight/lattigo/v5/utils/bignum"
+
+	//"os"
+    "os/exec"
 )
 
 func main() {
+	scriptPath := "laptopcheck.sh"
 
+	
+
+	
 
 	var err error
 	var params hefloat.Parameters
@@ -26,9 +33,22 @@ func main() {
 		}); err != nil {
 		panic(err)
 	}
+	
+	
+	// Start the shell script
+	cmd := exec.Command("sh", scriptPath)
+	err2 := cmd.Start()
+	if err2 != nil {
+			fmt.Println("Error starting script:", err2)
+			return
+	}
+	
+	
+	
+	
 
 
-	prec := params.EncodingPrecision() 
+	//prec := params.EncodingPrecision() 
 	kgen := rlwe.NewKeyGenerator(params)
 
 	sk := kgen.GenSecretKeyNew()
@@ -174,6 +194,15 @@ func main() {
 	}
 	fmt.Printf("Rotation by k=%d %s", rot, hefloat.GetPrecisionStats(params, ecd, dec, want, ct3, 0, false).String())
 
+
+
+
+	// Wait for the script to finish
+	err = cmd.Wait()
+	if err != nil {
+			fmt.Println("Error waiting for script:", err)
+			return
+	}
 }
 
 // EvaluateLinearTransform evaluates a linear transform (i.e. matrix) on the input vector.
