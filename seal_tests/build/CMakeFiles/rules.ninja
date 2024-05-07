@@ -6,7 +6,7 @@
 # It is included in the main 'build.ninja'.
 
 # =============================================================================
-# Project: demo
+# Project: seal_demo
 # Configurations: 
 # =============================================================================
 # =============================================================================
@@ -14,7 +14,7 @@
 #############################################
 # Rule for compiling CXX files.
 
-rule CXX_COMPILER__demo_
+rule CXX_COMPILER__seal_demo_
   depfile = $DEP_FILE
   deps = gcc
   command = /usr/bin/clang++-11 $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
@@ -24,7 +24,7 @@ rule CXX_COMPILER__demo_
 #############################################
 # Rule for linking CXX executable.
 
-rule CXX_EXECUTABLE_LINKER__demo_
+rule CXX_EXECUTABLE_LINKER__seal_demo_
   command = $PRE_LINK && /usr/bin/clang++-11 $FLAGS $LINK_FLAGS $in -o $TARGET_FILE $LINK_PATH $LINK_LIBRARIES && $POST_BUILD
   description = Linking CXX executable $TARGET_FILE
   restat = $RESTAT
@@ -42,7 +42,7 @@ rule CUSTOM_COMMAND
 # Rule for re-running cmake.
 
 rule RERUN_CMAKE
-  command = /usr/bin/cmake --regenerate-during-build -S"/home/anas/computer security/CS_HE_benchmark/openfhe_tests" -B"/home/anas/computer security/CS_HE_benchmark/openfhe_tests/build"
+  command = /usr/bin/cmake --regenerate-during-build -S"/home/anas/computer security/CS_HE_benchmark/seal_tests" -B"/home/anas/computer security/CS_HE_benchmark/seal_tests/build"
   description = Re-running CMake...
   generator = 1
 

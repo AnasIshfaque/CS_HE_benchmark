@@ -25,7 +25,7 @@ int main() {
 
     // starting the device tracking
     std::thread bash_thread([](){
-        std::system("../laptopcheck.sh");
+        std::system("../device_check.sh");
     });
 
     bash_thread.detach();
@@ -48,7 +48,7 @@ int main() {
 
     parms.set_coeff_modulus(CoeffModulus::Create(poly_modulus_degree, { 60, 40, 40, 60 }));
 
-    double scale = pow(2.0, 40);
+    double scale = pow(2.0, 50);
 
     SEALContext context(parms);
 
@@ -83,8 +83,8 @@ int main() {
     x1.reserve(slot_count);
     x2.reserve(slot_count);
 
-    x1 = {0.25, 0.5, 0.75, 1.0, 2.0, 3.0, 4.0, 5.0};
-    x2 = {5.0, 4.0, 3.0, 2.0, 1.0, 0.75, 0.5, 0.25};
+    x1 = {0.25, 0.5, 0.75, 1.0, 2.0, 3.0, 4.0};
+    x2 = {5.0, 4.0, 3.0, 2.0, 1.0, 0.75, 0.5};
 
     auto encryption_start_time = std::chrono::system_clock::now();
     // Encrypt the three vectors
@@ -126,6 +126,7 @@ int main() {
     //Evaluation
 
     // Add the first two vectors, then add the third vector
+    // auto add_start_time = std::chrono::high_resolution_clock::now();
     auto add_start_time = std::chrono::system_clock::now();
     Ciphertext sum;
     evaluator.add(encrypted1, encrypted2, sum);
@@ -136,8 +137,10 @@ int main() {
     //     sum.push_back(sum_temp);
     // }
 
+    // auto add_end_time = std::chrono::high_resolution_clock::now();
     auto add_end_time = std::chrono::system_clock::now();
     auto add_time = add_end_time - add_start_time;
+    // auto add_time_micro = std::chrono::duration_cast<std::chrono::microseconds>(add_time).count();
     auto add_time_millis = std::chrono::duration_cast<std::chrono::milliseconds>(add_time).count();
     std::cout << "Addition time: " << add_time_millis << " milliseconds" << std::endl;
 
@@ -145,6 +148,7 @@ int main() {
     auto mult_start_time = std::chrono::system_clock::now();
     Ciphertext product;
     evaluator.multiply(encrypted1, encrypted2, product);
+    evaluator.relinearize_inplace(product, relin_keys);
     // for (int i = 0; i < 8; ++i) {
     //     Ciphertext product_temp;
     //     evaluator.multiply(encrypted1[i], encrypted2[i], product_temp);
@@ -162,7 +166,7 @@ int main() {
 
     // Rotate the first vector to the left by 1
     Ciphertext rotated1;
-    evaluator.rotate_rows(encrypted1, 1, galois_keys, rotated1);
+    evaluator.rotate_vector(encrypted1, 1, galois_keys, rotated1);
     // for (int i = 0; i < 1000; ++i) {
     //     Ciphertext rotated_temp;
     //     evaluator.rotate_rows(encrypted1[i], 1, galois_keys, rotated_temp);
@@ -171,7 +175,7 @@ int main() {
 
     // Rotate the first vector to the left by 2
     Ciphertext rotated2;
-    evaluator.rotate_rows(encrypted1, 2, galois_keys, rotated2);
+    evaluator.rotate_vector(encrypted1, 2, galois_keys, rotated2);
     // for (int i = 0; i < 1000; ++i) {
     //     Ciphertext rotated_temp;
     //     evaluator.rotate_rows(encrypted1[i], 2, galois_keys, rotated_temp);
@@ -180,7 +184,7 @@ int main() {
 
     // Rotate the first vector to the right by 1
     Ciphertext rotated3;
-    evaluator.rotate_rows(encrypted1, -1, galois_keys, rotated3);
+    evaluator.rotate_vector(encrypted1, -1, galois_keys, rotated3);
     // for (int i = 0; i < 1000; ++i) {
     //     Ciphertext rotated_temp;
     //     evaluator.rotate_rows(encrypted1[i], -1, galois_keys, rotated_temp);
@@ -189,7 +193,7 @@ int main() {
 
     // Rotate the first vector to the right by 2
     Ciphertext rotated4;
-    evaluator.rotate_rows(encrypted1, -2, galois_keys, rotated4);
+    evaluator.rotate_vector(encrypted1, -2, galois_keys, rotated4);
     // for (int i = 0; i < 1000; ++i) {
     //     Ciphertext rotated_temp;
     //     evaluator.rotate_rows(encrypted1[i], -2, galois_keys, rotated_temp);
@@ -204,6 +208,7 @@ int main() {
     // Decryption
     // Decrypt the results
     auto decryption_start_time = std::chrono::system_clock::now();
+    // auto decryption_start_time = std::chrono::high_resolution_clock::now();
 
     Plaintext decrypted_sum;
     Plaintext decrypted_product;
@@ -243,8 +248,10 @@ int main() {
     // }
 
     auto decryption_end_time = std::chrono::system_clock::now();
+    // auto decryption_end_time = std::chrono::high_resolution_clock::now();
     auto decryption_time = decryption_end_time - decryption_start_time;
     auto decryption_time_millis = std::chrono::duration_cast<std::chrono::milliseconds>(decryption_time).count();
+    // auto decryption_time_micro = std::chrono::duration_cast<std::chrono::microseconds>(decryption_end_time).count();
     std::cout << "Decryption time: " << decryption_time_millis << " milliseconds" << std::endl;
 
     // Print the results
@@ -282,7 +289,7 @@ int main() {
     std::this_thread::sleep_for(std::chrono::seconds(3));
 
     // Terminate the bash script process
-    terminateProcess("../laptopcheck.sh");
+    terminateProcess("../device_check.sh");
 
     return 0;
 }

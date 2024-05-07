@@ -30,7 +30,7 @@ int main() {
 
     // starting the device tracking
     std::thread bash_thread([](){
-        std::system("../laptopcheck.sh");
+        std::system("../device_check.sh");
     });
 
     bash_thread.detach();
@@ -151,6 +151,7 @@ int main() {
 
     // Add the first two vectors, then add the third vector
     auto add_start_time = std::chrono::system_clock::now();
+    // auto add_start_time = std::chrono::high_resolution_clock::now();
     Ciphertext sum;
 
     evaluator.add(encrypted1, encrypted2, sum);
@@ -164,9 +165,12 @@ int main() {
     // }
 
     auto add_end_time = std::chrono::system_clock::now();
+    // auto add_end_time = std::chrono::high_resolution_clock::now();
     auto add_time = add_end_time - add_start_time;
     auto add_time_millis = std::chrono::duration_cast<std::chrono::milliseconds>(add_time).count();
+    // auto add_time_micro = std::chrono::duration_cast<std::chrono::microseconds>(add_time).count();
     std::cout << "Addition time: " << add_time_millis << " milliseconds" << std::endl;
+    
 
     //Multiply the three vectors
     auto mult_start_time = std::chrono::system_clock::now();
@@ -311,7 +315,7 @@ int main() {
     std::this_thread::sleep_for(std::chrono::seconds(3));
 
     // Terminate the bash script process
-    terminateProcess("../laptopcheck.sh");
+    terminateProcess("../device_check.sh");
 
     return 0;
 }

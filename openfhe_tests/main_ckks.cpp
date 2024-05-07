@@ -23,11 +23,11 @@ void terminateProcess(const char* processName) {
 int main() {
 
     // starting the device tracking
-    std::thread bash_thread([](){
-        std::system("../laptopcheck.sh");
-    });
+    // std::thread bash_thread([](){
+    //     std::system("../laptopcheck.sh");
+    // });
 
-    bash_thread.detach();
+    // bash_thread.detach();
 
     // std::this_thread::sleep_for(std::chrono::seconds(3));
 
@@ -57,7 +57,7 @@ int main() {
     cryptoContext->Enable(PKE);
     cryptoContext->Enable(KEYSWITCH);
     cryptoContext->Enable(LEVELEDSHE);
-    std::cout << "CKKS scheme is using ring dimension " << cryptoContext->GetRingDimension() << std::endl << std::endl;
+    std::cout << "CKKS scheme is using ring dimension " << cryptoContext->GetRingDimension() << std::endl << std::endl; // found 16384
 
     auto key_gen_start_time = std::chrono::system_clock::now();
 
@@ -246,7 +246,7 @@ int main() {
     std::this_thread::sleep_for(std::chrono::seconds(3));
 
     // Terminate the bash script process
-    terminateProcess("../laptopcheck.sh");
+    // terminateProcess("../laptopcheck.sh");
 
     return 0;
 }
