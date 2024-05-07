@@ -1,6 +1,0 @@
-# ninja log v5
-0	1476	1715077636333254150	CMakeFiles/seal_demo.dir/main_ckks.cpp.o	a2e670f8d6226cfe
-0	1440	1715077872151497980	CMakeFiles/seal_demo.dir/main_bfv.cpp.o	5dcce6c2ae47d670
-1441	1529	1715077872251640060	seal_demo	eef311d16422e7d6
-0	1472	1715077900359777169	CMakeFiles/seal_demo.dir/main_bgv.cpp.o	8bdf91a69902273c
-1473	1565	1715077900463833035	seal_demo	4c3b979cd1a2efa5
