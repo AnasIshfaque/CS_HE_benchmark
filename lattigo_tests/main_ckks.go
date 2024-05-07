@@ -14,7 +14,7 @@ import (
 )
 
 func main() {
-	scriptPath := "laptopcheck.sh"
+	scriptPath := "device_check.sh"
 
 	
 
@@ -288,7 +288,7 @@ func main() {
 	fmt.Println("Decryption time: ", decryption_end_time.Sub(decryption_start_time))
 
 	// Wait for the script to finish
-	err = cmd.Wait()
+	err = cmd.Process.Kill()
 	if err != nil {
 			fmt.Println("Error waiting for script:", err)
 			return
