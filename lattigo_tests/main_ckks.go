@@ -58,7 +58,7 @@ func main() {
 	evk := rlwe.NewMemEvaluationKeySet(rlk)
 
 	key_gen_end_time := time.Now()
-	fmt.Println("Key generation time: ", key_gen_end_time.Sub(key_gen_start_time))
+	
 
 	LogSlots := params.LogMaxSlots()
 	Slots := 1 << LogSlots
@@ -270,17 +270,17 @@ func main() {
 	//decrypt multiplication 
 	fmt.Printf("Multiplication - ct * ct%s", hefloat.GetPrecisionStats(params, ecd, dec, want_mul, res, 0, false).String())
 	//decrypt rotations
-	fmt.Printf("Rotation by k=%d %s", rot, hefloat.GetPrecisionStats(params, ecd, dec, want_rot1, ct3_rot1, 0, false).String())
-	fmt.Printf("Rotation by k=%d %s", rot, hefloat.GetPrecisionStats(params, ecd, dec, want_rot2, ct3_rot2, 0, false).String())
-	fmt.Printf("Rotation by k=%d %s", rot, hefloat.GetPrecisionStats(params, ecd, dec, want_rot3, ct3_rot3, 0, false).String())
-	fmt.Printf("Rotation by k=%d %s", rot, hefloat.GetPrecisionStats(params, ecd, dec, want_rot4, ct3_rot4, 0, false).String())
+	fmt.Printf("Rotation by k=1 %s",  hefloat.GetPrecisionStats(params, ecd, dec, want_rot1, ct3_rot1, 0, false).String())
+	fmt.Printf("Rotation by k=2 %s",  hefloat.GetPrecisionStats(params, ecd, dec, want_rot2, ct3_rot2, 0, false).String())
+	fmt.Printf("Rotation by k=-1 %s",  hefloat.GetPrecisionStats(params, ecd, dec, want_rot3, ct3_rot3, 0, false).String())
+	fmt.Printf("Rotation by k=-2 %s",  hefloat.GetPrecisionStats(params, ecd, dec, want_rot4, ct3_rot4, 0, false).String())
 	decryption_end_time := time.Now()
 
 
 
 
 
-
+	fmt.Println("Key generation time: ", key_gen_end_time.Sub(key_gen_start_time))
 	fmt.Println("Encryption time: ", encryption_end_time.Sub(encryption_start_time))
 	fmt.Println("Addition time: ", addition_end_time.Sub(addition_start_time))
 	fmt.Println("Multiplication time: ", multiplication_end_time.Sub(mutliplication_start_time))
