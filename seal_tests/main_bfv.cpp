@@ -21,6 +21,11 @@ void terminateProcess(const char* processName) {
     std::system(command);
 }
 
+std::string uint64_to_hex_string(std::uint64_t value)
+{
+    return seal::util::uint_to_hex_string(&value, std::size_t(1));
+}
+
 int main() {
 
     // starting the device tracking
@@ -48,7 +53,8 @@ int main() {
 
     parms.set_coeff_modulus(CoeffModulus::BFVDefault(poly_modulus_degree));
 
-    parms.set_plain_modulus(65537);
+    // parms.set_plain_modulus(65537);
+    parms.set_plain_modulus(PlainModulus::Batching(poly_modulus_degree, 20));
 
     SEALContext context(parms);
 
@@ -64,9 +70,14 @@ int main() {
     GaloisKeys galois_keys;
     keygen.create_galois_keys(galois_keys);
 
+    // IntegerEncoder encoder(context);
     Encryptor encryptor(context, public_key);
     Evaluator evaluator(context);
     Decryptor decryptor(context, secret_key);
+
+    BatchEncoder batch_encoder(context);
+    size_t slot_count = batch_encoder.slot_count();
+
 
     auto key_gen_end_time = std::chrono::system_clock::now();
     auto key_gen_time = key_gen_end_time - key_gen_start_time;
@@ -77,49 +88,59 @@ int main() {
     // Generate three integer vectors
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_int_distribution<int64_t> dis(0, 999);
+    std::uniform_int_distribution<uint64_t> dis(0, 999);
 
     // Create vectorOfInts1 and populate it with 300 random int64_t values
-    std::vector<int64_t> vectorOfInts1(1000);
+    vector<uint64_t> vectorOfInts1(1000);
     for (int i = 0; i < 1000; ++i) {
         vectorOfInts1[i] = dis(gen);
     }
 
     // Create vectorOfInts2 and populate it with 300 random int64_t values
-    std::vector<int64_t> vectorOfInts2(1000);
+    vector<uint64_t> vectorOfInts2(1000);
     for (int i = 0; i < 1000; ++i) {
         vectorOfInts2[i] = dis(gen);
     }
 
     // Create vectorOfInts3 and populate it with 300 random int64_t values
-    std::vector<int64_t> vectorOfInts3(1000);
+    vector<uint64_t> vectorOfInts3(1000);
     for (int i = 0; i < 1000; ++i) {
         vectorOfInts3[i] = dis(gen);
     }
 
     auto encryption_start_time = std::chrono::system_clock::now();
-    // Encrypt the three vectors
-    std::vector<Ciphertext> encrypted1;
-    std::vector<Ciphertext> encrypted2;
-    std::vector<Ciphertext> encrypted3;
 
-    for (int i = 0; i < 1000; ++i) {
-        Plaintext plain1(to_string(vectorOfInts1[i]));
-        Plaintext plain2(to_string(vectorOfInts2[i]));
-        Plaintext plain3(to_string(vectorOfInts3[i]));
+    // Encode the three vectors
+    Plaintext plain1, plain2, plain3;
+    batch_encoder.encode(vectorOfInts1, plain1);
+    batch_encoder.encode(vectorOfInts2, plain2);
+    batch_encoder.encode(vectorOfInts3, plain3);
 
-        Ciphertext encrypted1_temp;
-        Ciphertext encrypted2_temp;
-        Ciphertext encrypted3_temp;
+    Ciphertext encrypted1;
+    Ciphertext encrypted2;
+    Ciphertext encrypted3;
 
-        encryptor.encrypt(plain1, encrypted1_temp);
-        encryptor.encrypt(plain2, encrypted2_temp);
-        encryptor.encrypt(plain3, encrypted3_temp);
+    encryptor.encrypt(plain1, encrypted1);
+    encryptor.encrypt(plain2, encrypted2);
+    encryptor.encrypt(plain3, encrypted3);
 
-        encrypted1.push_back(encrypted1_temp);
-        encrypted2.push_back(encrypted2_temp);
-        encrypted3.push_back(encrypted3_temp);
-    }
+    // for (int i = 0; i < 1000; ++i) {
+    //     Plaintext plain1(uint64_to_hex_string(vectorOfInts1[i]));
+    //     Plaintext plain2(uint64_to_hex_string(vectorOfInts2[i]));
+    //     Plaintext plain3(uint64_to_hex_string(vectorOfInts3[i]));
+
+    //     Ciphertext encrypted1_temp;
+    //     Ciphertext encrypted2_temp;
+    //     Ciphertext encrypted3_temp;
+
+    //     encryptor.encrypt(plain1, encrypted1_temp);
+    //     encryptor.encrypt(plain2, encrypted2_temp);
+    //     encryptor.encrypt(plain3, encrypted3_temp);
+
+    //     encrypted1.push_back(encrypted1_temp);
+    //     encrypted2.push_back(encrypted2_temp);
+    //     encrypted3.push_back(encrypted3_temp);
+    // }
 
     auto encryption_end_time = std::chrono::system_clock::now();
     auto encryption_time = encryption_end_time - encryption_start_time;
@@ -130,13 +151,17 @@ int main() {
 
     // Add the first two vectors, then add the third vector
     auto add_start_time = std::chrono::system_clock::now();
-    std::vector<Ciphertext> sum;
-    for (int i = 0; i < 1000; ++i) {
-        Ciphertext sum_temp;
-        evaluator.add(encrypted1[i], encrypted2[i], sum_temp);
-        evaluator.add_inplace(sum_temp, encrypted3[i]);
-        sum.push_back(sum_temp);
-    }
+    Ciphertext sum;
+
+    evaluator.add(encrypted1, encrypted2, sum);
+    evaluator.add_inplace(sum, encrypted3);
+
+    // for (int i = 0; i < 1000; ++i) {
+    //     Ciphertext sum_temp;
+    //     evaluator.add(encrypted1[i], encrypted2[i], sum_temp);
+    //     evaluator.add_inplace(sum_temp, encrypted3[i]);
+    //     sum.push_back(sum_temp);
+    // }
 
     auto add_end_time = std::chrono::system_clock::now();
     auto add_time = add_end_time - add_start_time;
@@ -145,13 +170,17 @@ int main() {
 
     //Multiply the three vectors
     auto mult_start_time = std::chrono::system_clock::now();
-    std::vector<Ciphertext> product;
-    for (int i = 0; i < 1000; ++i) {
-        Ciphertext product_temp;
-        evaluator.multiply(encrypted1[i], encrypted2[i], product_temp);
-        evaluator.multiply_inplace(product_temp, encrypted3[i]);
-        product.push_back(product_temp);
-    }
+    Ciphertext product;
+
+    evaluator.multiply(encrypted1, encrypted2, product);
+    evaluator.multiply_inplace(product, encrypted3);
+
+    // for (int i = 0; i < 1000; ++i) {
+    //     Ciphertext product_temp;
+    //     evaluator.multiply(encrypted1[i], encrypted2[i], product_temp);
+    //     evaluator.multiply_inplace(product_temp, encrypted3[i]);
+    //     product.push_back(product_temp);
+    // }
 
     auto mult_end_time = std::chrono::system_clock::now();
     auto mult_time = mult_end_time - mult_start_time;
@@ -162,36 +191,40 @@ int main() {
     auto rot_start_time = std::chrono::system_clock::now();
 
     // Rotate the first vector to the left by 1
-    std::vector<Ciphertext> rotated1;
-    for (int i = 0; i < 1000; ++i) {
-        Ciphertext rotated_temp;
-        evaluator.rotate_rows(encrypted1[i], 1, galois_keys, rotated_temp);
-        rotated1.push_back(rotated_temp);
-    }
+    Ciphertext rotated1;
+    evaluator.rotate_rows(encrypted1, 1, galois_keys, rotated1);
+    // for (int i = 0; i < 1000; ++i) {
+    //     Ciphertext rotated_temp;
+    //     evaluator.rotate_rows(encrypted1[i], 1, galois_keys, rotated_temp);
+    //     rotated1.push_back(rotated_temp);
+    // }
 
     // Rotate the first vector to the left by 2
-    std::vector<Ciphertext> rotated2;
-    for (int i = 0; i < 1000; ++i) {
-        Ciphertext rotated_temp;
-        evaluator.rotate_rows(encrypted1[i], 2, galois_keys, rotated_temp);
-        rotated2.push_back(rotated_temp);
-    }
+    Ciphertext rotated2;
+    evaluator.rotate_rows(encrypted1, 2, galois_keys, rotated2);
+    // for (int i = 0; i < 1000; ++i) {
+    //     Ciphertext rotated_temp;
+    //     evaluator.rotate_rows(encrypted1[i], 2, galois_keys, rotated_temp);
+    //     rotated2.push_back(rotated_temp);
+    // }
 
     // Rotate the first vector to the right by 1
-    std::vector<Ciphertext> rotated3;
-    for (int i = 0; i < 1000; ++i) {
-        Ciphertext rotated_temp;
-        evaluator.rotate_rows(encrypted1[i], -1, galois_keys, rotated_temp);
-        rotated3.push_back(rotated_temp);
-    }
+    Ciphertext rotated3;
+    evaluator.rotate_rows(encrypted1, -1, galois_keys, rotated3);
+    // for (int i = 0; i < 1000; ++i) {
+    //     Ciphertext rotated_temp;
+    //     evaluator.rotate_rows(encrypted1[i], -1, galois_keys, rotated_temp);
+    //     rotated3.push_back(rotated_temp);
+    // }
 
     // Rotate the first vector to the right by 2
-    std::vector<Ciphertext> rotated4;
-    for (int i = 0; i < 1000; ++i) {
-        Ciphertext rotated_temp;
-        evaluator.rotate_rows(encrypted1[i], -2, galois_keys, rotated_temp);
-        rotated4.push_back(rotated_temp);
-    }
+    Ciphertext rotated4;
+    evaluator.rotate_rows(encrypted1, -2, galois_keys, rotated4);
+    // for (int i = 0; i < 1000; ++i) {
+    //     Ciphertext rotated_temp;
+    //     evaluator.rotate_rows(encrypted1[i], -2, galois_keys, rotated_temp);
+    //     rotated4.push_back(rotated_temp);
+    // }
 
     auto rot_end_time = std::chrono::system_clock::now();
     auto rot_time = rot_end_time - rot_start_time;
@@ -202,35 +235,41 @@ int main() {
     // Decrypt the results
     auto decryption_start_time = std::chrono::system_clock::now();
 
-    std::vector<Plaintext> decrypted_sum;
-    std::vector<Plaintext> decrypted_product;
-    std::vector<Plaintext> decrypted_rotated1;
-    std::vector<Plaintext> decrypted_rotated2;
-    std::vector<Plaintext> decrypted_rotated3;
-    std::vector<Plaintext> decrypted_rotated4;
+    Plaintext decrypted_sum;
+    Plaintext decrypted_product;
+    Plaintext decrypted_rotated1;
+    Plaintext decrypted_rotated2;
+    Plaintext decrypted_rotated3;
+    Plaintext decrypted_rotated4;
 
-    for (int i = 0; i < 1000; ++i) {
-        Plaintext decrypted_sum_temp;
-        Plaintext decrypted_product_temp;
-        Plaintext decrypted_rotated1_temp;
-        Plaintext decrypted_rotated2_temp;
-        Plaintext decrypted_rotated3_temp;
-        Plaintext decrypted_rotated4_temp;
+    decryptor.decrypt(sum, decrypted_sum);
+    decryptor.decrypt(product, decrypted_product);
+    decryptor.decrypt(rotated1, decrypted_rotated1);
+    decryptor.decrypt(rotated2, decrypted_rotated2);
+    decryptor.decrypt(rotated3, decrypted_rotated3);
+    decryptor.decrypt(rotated4, decrypted_rotated4);
+    // for (int i = 0; i < 1000; ++i) {
+    //     Plaintext decrypted_sum_temp;
+    //     Plaintext decrypted_product_temp;
+    //     Plaintext decrypted_rotated1_temp;
+    //     Plaintext decrypted_rotated2_temp;
+    //     Plaintext decrypted_rotated3_temp;
+    //     Plaintext decrypted_rotated4_temp;
 
-        decryptor.decrypt(sum[i], decrypted_sum_temp);
-        decryptor.decrypt(product[i], decrypted_product_temp);
-        decryptor.decrypt(rotated1[i], decrypted_rotated1_temp);
-        decryptor.decrypt(rotated2[i], decrypted_rotated2_temp);
-        decryptor.decrypt(rotated3[i], decrypted_rotated3_temp);
-        decryptor.decrypt(rotated4[i], decrypted_rotated4_temp);
+    //     decryptor.decrypt(sum[i], decrypted_sum_temp);
+    //     decryptor.decrypt(product[i], decrypted_product_temp);
+    //     decryptor.decrypt(rotated1[i], decrypted_rotated1_temp);
+    //     decryptor.decrypt(rotated2[i], decrypted_rotated2_temp);
+    //     decryptor.decrypt(rotated3[i], decrypted_rotated3_temp);
+    //     decryptor.decrypt(rotated4[i], decrypted_rotated4_temp);
 
-        decrypted_sum.push_back(decrypted_sum_temp);
-        decrypted_product.push_back(decrypted_product_temp);
-        decrypted_rotated1.push_back(decrypted_rotated1_temp);
-        decrypted_rotated2.push_back(decrypted_rotated2_temp);
-        decrypted_rotated3.push_back(decrypted_rotated3_temp);
-        decrypted_rotated4.push_back(decrypted_rotated4_temp);
-    }
+    //     decrypted_sum.push_back(decrypted_sum_temp);
+    //     decrypted_product.push_back(decrypted_product_temp);
+    //     decrypted_rotated1.push_back(decrypted_rotated1_temp);
+    //     decrypted_rotated2.push_back(decrypted_rotated2_temp);
+    //     decrypted_rotated3.push_back(decrypted_rotated3_temp);
+    //     decrypted_rotated4.push_back(decrypted_rotated4_temp);
+    // }
 
     auto decryption_end_time = std::chrono::system_clock::now();
     auto decryption_time = decryption_end_time - decryption_start_time;
