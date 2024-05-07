@@ -22,5 +22,5 @@ export PATH=$PATH:/usr/local/go/bin
 
 ```
 # Running CKKS test bench
-go run hefloat.go
+go run main_ckks.go
 ```
