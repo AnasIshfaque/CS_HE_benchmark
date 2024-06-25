@@ -52,4 +52,4 @@ endif()
 ### add_executable( EXECUTABLE-NAME SOURCES )
 ###
 ### EXAMPLE:
-add_executable(${PROJECT_NAME} main_ckks.cpp)
+add_executable(${PROJECT_NAME} ./serialize_exps/serialize_bfv_bgv.cpp)

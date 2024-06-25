@@ -10,5 +10,5 @@ find_package(SEAL 4.1 REQUIRED)
 # include_directories(${SEAL_INCLUDE_DIRS})
 
 
-add_executable(${PROJECT_NAME} main_ckks.cpp)
+add_executable(${PROJECT_NAME} ./serialize_exps/serialize_bfv_bgv.cpp)
 target_link_libraries(${PROJECT_NAME} SEAL::seal)

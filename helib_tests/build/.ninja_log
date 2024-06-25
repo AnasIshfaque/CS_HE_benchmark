@@ -1,0 +1,7 @@
+# ninja log v5
+0	3802	1718174572966925922	CMakeFiles/helib_demo.dir/ckks_test.cpp.o	1ec76a0a36fef763
+3806	5385	1718174574533728856	helib_demo	dd34191252953d86
+0	3515	1718166976894821024	CMakeFiles/helib_demo.dir/bgv_test.cpp.o	bd1af9b1dc7c95c7
+2	34	1718180496352974446	build.ninja	3cc3d7ab0bb56448
+0	1185	1718180497544584311	CMakeFiles/helib_demo.dir/bgv_test.cpp.o	bd1af9b1dc7c95c7
+1185	1797	1718180498148390106	helib_demo	3148b95a93f4bd9b

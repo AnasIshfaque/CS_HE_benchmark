@@ -1,0 +1,20 @@
+# ninja log v5
+14	17148	1715100504086529976	CMakeFiles/seal_demo.dir/main_ckks.cpp.o	a2e670f8d6226cfe
+1551	1658	1719112222024905448	seal_demo	87c13cac189fab2e
+2	1551	1719112221908907501	CMakeFiles/seal_demo.dir/serialize_exps/serialize_ckks.cpp.o	9d6054f3e2fd052f
+0	1469	1719112854704963132	CMakeFiles/seal_demo.dir/serialize_exps/serialize_bfv_bgv.cpp.o	1ea6065a30ee3748
+1470	1556	1719112854800972840	seal_demo	7201eb9911d6b0fe
+2	1442	1719112984754807004	CMakeFiles/seal_demo.dir/serialize_exps/serialize_bfv_bgv.cpp.o	1ea6065a30ee3748
+1442	1531	1719112984850812224	seal_demo	7201eb9911d6b0fe
+2	1463	1719113048253742656	CMakeFiles/seal_demo.dir/serialize_exps/serialize_bfv_bgv.cpp.o	1ea6065a30ee3748
+1463	1550	1719113048349746376	seal_demo	7201eb9911d6b0fe
+3	4825	1719224369260666191	CMakeFiles/seal_demo.dir/serialize_exps/serialize_bfv_bgv.cpp.o	1ea6065a30ee3748
+4825	5096	1719224369552788010	seal_demo	7201eb9911d6b0fe
+3	4601	1719224512997672657	CMakeFiles/seal_demo.dir/serialize_exps/serialize_bfv_bgv.cpp.o	1ea6065a30ee3748
+4601	4831	1719224513249771072	seal_demo	7201eb9911d6b0fe
+3	4643	1719225625380979386	CMakeFiles/seal_demo.dir/serialize_exps/serialize_bfv_bgv.cpp.o	1ea6065a30ee3748
+4643	4883	1719225625645058781	seal_demo	7201eb9911d6b0fe
+3	4844	1719227975916642270	CMakeFiles/seal_demo.dir/serialize_exps/serialize_bfv_bgv.cpp.o	1ea6065a30ee3748
+4845	5113	1719227976208587846	seal_demo	7201eb9911d6b0fe
+3	4671	1719228073299316162	CMakeFiles/seal_demo.dir/serialize_exps/serialize_bfv_bgv.cpp.o	1ea6065a30ee3748
+4672	4915	1719228073567305369	seal_demo	7201eb9911d6b0fe

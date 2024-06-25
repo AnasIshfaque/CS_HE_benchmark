@@ -1,11 +1,16 @@
 # CS_HE_benchmark
 
-## OpenFHE
-
+## OpenFHE and SEAL
+Go to the openfhe_tests or seal_tests directory and run the following commands to build the executables:
+```
+mkdir build && cd build
+```
 ```
 CC=/usr/bin/clang-11 CXX=/usr/bin/clang++-11 cmake .. -G Ninja
 ```
-
+```
+ninja
+```
 ## Lattigo
 
 Installation instructions: https://go.dev/doc/install

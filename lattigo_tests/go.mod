@@ -1,6 +1,6 @@
 module github.com/tuneinsight/lattigo/v5
 
-go 1.18
+go 1.22.4
 
 require (
 	github.com/google/go-cmp v0.5.8
@@ -8,6 +8,8 @@ require (
 	golang.org/x/crypto v0.18.0
 	golang.org/x/exp v0.0.0-20230321023759-10a507213a29
 )
+
+require github.com/tuneinsight/lattigo v1.3.1 // indirect
 
 require (
 	github.com/ALTree/bigfloat v0.0.0-20220102081255-38c8b72a9924

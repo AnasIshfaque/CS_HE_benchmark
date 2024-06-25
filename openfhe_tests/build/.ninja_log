@@ -1,0 +1,17 @@
+# ninja log v5
+0	5306	1717158894108286147	CMakeFiles/demo.dir/main_ckks.cpp.o	5705c97384872e8b
+35386	35537	1719026057810266780	demo	de4e0dd60098bcdd
+2	5922	1717671565811245514	CMakeFiles/demo.dir/main_bfv.cpp.o	4f87b51ebf3e630f
+4	37239	1718981937990576167	CMakeFiles/demo.dir/serialize_bfv.cpp.o	ad0b2b0b777c07c9
+0	38006	1718982043320465025	CMakeFiles/demo.dir/serialize_ckks.cpp.o	ac474998aba4e6e
+4	35386	1719026057562260130	CMakeFiles/demo.dir/serialize_exps/serialize_ckks.cpp.o	d879a603c0c28597
+0	35835	1719026382951988163	CMakeFiles/demo.dir/serialize_exps/serialize_bfv_bgv.cpp.o	519ccdf79ada4d65
+35836	35976	1719026383187958223	demo	c6ab880192bdabce
+4	34958	1719026490932851906	CMakeFiles/demo.dir/serialize_exps/serialize_bfv_bgv.cpp.o	519ccdf79ada4d65
+34958	35105	1719026491176831172	demo	c6ab880192bdabce
+4	35683	1719026684195771865	CMakeFiles/demo.dir/serialize_exps/serialize_bfv_bgv.cpp.o	519ccdf79ada4d65
+35683	35835	1719026684451851587	demo	c6ab880192bdabce
+4	35956	1719027011529556296	CMakeFiles/demo.dir/serialize_exps/serialize_bfv_bgv.cpp.o	519ccdf79ada4d65
+35956	36108	1719027011773563266	demo	c6ab880192bdabce
+5	36545	1719027098391474239	CMakeFiles/demo.dir/serialize_exps/serialize_bfv_bgv.cpp.o	519ccdf79ada4d65
+36545	36692	1719027098643478499	demo	c6ab880192bdabce

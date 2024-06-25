@@ -1,0 +1,3 @@
+/home/anas/computer security/CS_HE_benchmark/helib_tests/build/CMakeFiles/helib_demo.dir
+/home/anas/computer security/CS_HE_benchmark/helib_tests/build/CMakeFiles/edit_cache.dir
+/home/anas/computer security/CS_HE_benchmark/helib_tests/build/CMakeFiles/rebuild_cache.dir

@@ -72,7 +72,8 @@ echo "CPU Usage: $cpu_usage" >> "$SINGLE_VAL_FILE"
 power_draw=$(get_power_draw)
 echo "Power Draw: $power_draw" >> "$SINGLE_VAL_FILE"
 
-while true; do
+for i in {1..10} 
+do
 
     # Append metrics to CSV file
     append_metrics_to_csv
