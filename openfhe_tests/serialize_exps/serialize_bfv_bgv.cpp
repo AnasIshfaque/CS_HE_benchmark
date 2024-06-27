@@ -10,16 +10,16 @@
 #include "ciphertext-ser.h"
 #include "cryptocontext-ser.h"
 #include "key/key-ser.h"
-#include "scheme/bgvrns/bgvrns-ser.h"
+#include "scheme/bfvrns/bfvrns-ser.h"
 // #include "scheme/ckksrns/ckksrns-ser.h"
 
 using namespace lbcrypto;
 
 int main(){
-    std::string cipherOneLocation = "../ciphertext_bgv.txt";
+    std::string cipherOneLocation = "../ciphertext_bfv.txt";
 
     // Set CryptoContext
-    CCParams<CryptoContextBGVRNS> parameters;
+    CCParams<CryptoContextBFVRNS> parameters;
     parameters.SetPlaintextModulus(65537);
     parameters.SetMultiplicativeDepth(4);
 
